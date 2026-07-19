@@ -1,0 +1,4 @@
+/dist/
+/unitypackage
+*.unitypackage
+.DS_Store

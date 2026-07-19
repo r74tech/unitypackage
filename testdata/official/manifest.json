@@ -1,0 +1,34 @@
+{
+  "artifacts": [
+    {
+      "id": "unity-postprocessing-1.0.4",
+      "name": "Unity Post Processing 1.0.4",
+      "publisher": "Unity Technologies",
+      "source": "https://github.com/Unity-Technologies/PostProcessing/releases/tag/1.0.4",
+      "url": "https://github.com/Unity-Technologies/PostProcessing/releases/download/1.0.4/Unity-PostProcessing-1.0.4.unitypackage",
+      "filename": "Unity-PostProcessing-1.0.4.unitypackage",
+      "kind": "file",
+      "size": 32578724,
+      "sha256": "5fd52ebd6e70c3ca8de4ea54cbda022b345cbdce1ab548c02ee30a5c60fae281",
+      "expected": {
+        "records": 233,
+        "folders": 28,
+        "files": 205
+      }
+    },
+    {
+      "id": "vrchat-vpm-resolver-0.1.9",
+      "name": "com.vrchat.core.vpm-resolver 0.1.9",
+      "publisher": "VRChat",
+      "source": "https://vrchat.github.io/packages/index.json",
+      "url": "https://github.com/vrchat/packages/releases/download/resolvers/com.vrchat.core.vpm-resolver-0.1.9.zip",
+      "filename": "com.vrchat.core.vpm-resolver-0.1.9.zip",
+      "kind": "zip",
+      "size": 223381,
+      "sha256": "fb282e803c6691853a5bf1b64e10971c5388e9a3059dc671a4c476e414707b7a",
+      "expected": {
+        "convertedRecords": 13
+      }
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  go:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+          cache: false
+      - run: go test ./...
+      - if: runner.os == 'Linux'
+        run: go test -race ./...
+      - run: go vet ./...
+      - if: runner.os == 'Linux'
+        run: go run golang.org/x/vuln/cmd/govulncheck@v1.6.0 ./...
+      - run: go build ./cmd/unitypackage
+
+  interoperability:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+          cache: false
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ runner.temp }}/unitypackage-testdata
+          key: official-testdata-${{ hashFiles('testdata/official/manifest.json') }}
+      - name: Fetch and verify official test data
+        run: >-
+          go run ./internal/cmd/fetchtestdata
+          -manifest testdata/official/manifest.json
+          -dir "$RUNNER_TEMP/unitypackage-testdata"
+      - name: Test official interoperability
+        run: go test -tags=interop ./internal/interop
+        env:
+          UNITYPACKAGE_TESTDATA_DIR: ${{ runner.temp }}/unitypackage-testdata
